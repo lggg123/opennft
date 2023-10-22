@@ -7,22 +7,23 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract VibrantzNFT is ERC721URIStorage, Ownable {
+contract BatchNFTs is ERC721URIStorage, Ownable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
-    constructor() ERC721("Vibrantz", "VBTZ") {}
+    constructor() ERC721("Smildeezduz", "SMTLZ") {}
 
-    function mintNFT(address recipient, string memory tokenURI)
+    function batchMintNFTs(address recipient, string[] memory tokenURIs)
         public onlyOwner
-        returns (uint256)
-        {
+    {
+        require(tokenURIs.length > 0, "No token URIs provided");
+
+        for (uint256 i = 0; i < tokenURIs.length; i++) {
             _tokenIds.increment();
 
             uint256 newItemId = _tokenIds.current();
             _mint(recipient, newItemId);
-            _setTokenURI(newItemId, tokenURI);
-
-            return newItemId;
+            _setTokenURI(newItemId, tokenURIs[i]);
         }
+    }
 }

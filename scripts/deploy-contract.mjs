@@ -1,10 +1,10 @@
 // Metadata stores on Filecoin and IPFS with URL: ipfs://bafyreiekjyftfzza4usx622lopihngfsuppkjzmxtp3w7hzgfjk53uymuy/metadata.json
 
 async function deployContract() {
-    const VibrantzNFT = await ethers.getContractFactory("VibrantzNFT")
-    const vibrantzNFT = await VibrantzNFT.deploy()
-    await vibrantzNFT.deployed()
-    const txHash = vibrantzNFT.deployTransaction.hash
+    const BatchNFTs = await ethers.getContractFactory("BatchNFTs")
+    const batchNFTs = await BatchNFTs.deploy()
+    await batchNFTs.deployed()
+    const txHash = batchNFTs.deployTransaction.hash
     const txReceipt = await ethers.provider.waitForTransaction(txHash)
     const contractAddress = txReceipt.contractAddress
     console.log("Contract deployed to address:", contractAddress)
@@ -18,3 +18,5 @@ deployContract()
         console.error(error);
         process.exit(1);
     });
+
+export { CONTRACT_ADDRESS }; // Export CONTRACT_ADDRESS

@@ -1,17 +1,23 @@
-const CONTRACT_ADDRESS = "0xe9d78362EB96Ce134a6380a8777303C50Bd88311"
-const META_DATA_URL = "ipfs://bafyreiekjyftfzza4usx622lopihngfsuppkjzmxtp3w7hzgfjk53uymuy/metadata.json"
+import storeMultipleAssets from './store-asset.mjs';
+import { CONTRACT_ADDRESS } from './deploy-contract.mjs';
 
-async function mintNFT(contractAddress, metaDataURL) {
-    const VibrantzNFT = await ethers.getContractFactory("VibrantzNFT")
+async function mintNFTs(contractAddress, metaDataURLs) {
+    const BatchNFTs = await ethers.getContractFactory("BatchNFTs")
     const [owner] = await ethers.getSigners()
-    await VibrantzNFT.attach(contractAddress).mintNFT(owner.address, metaDataURL)
-    console.log("NFT minted to: ", owner.address)
-    // NFT minted to:  0xEA3AF2F7fC9FD23DAEa15D8d5E38B510E6830780
+    const contract =  BatchNFTs.attach(contractAddress);
+    
+    for (let i  = 0; i < metaDataURLs.length; i++) {
+        await contract.BatchNFTs(owner.address, [metaDataURLs[i]]);
+        console.log(`NFT ${i + 1} minted to: `, owner.address);
+        // NFT minted to:  0xEA3AF2F7fC9FD23DAEa15D8d5E38B510E6830780
+    }
 }
 
-mintNFT(CONTRACT_ADDRESS, META_DATA_URL)
-    .then(() => process.exit(0))
-    .catch((error) => {
-        console.error(error);
-        process.exit(1);
-    });
+storeMultipleAssets().then((metadataUrls) => {
+    mintNFTs(CONTRACT_ADDRESS, metadataUrls)
+        .then(() => process.exit(0))
+        .catch((error) => {
+            console.error(error);
+            process.exit(1);
+        });
+});
