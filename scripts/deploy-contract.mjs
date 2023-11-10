@@ -1,9 +1,9 @@
-const { ethers } = require("hardhat");
-
 // Metadata stores on Filecoin and IPFS with URL: ipfs://bafyreiekjyftfzza4usx622lopihngfsuppkjzmxtp3w7hzgfjk53uymuy/metadata.json
 let CONTRACT_ADDRESS;
 
 async function deployContract() {
+    const hre = await getHRE();
+    const ethers = hre.ethers;
     const BatchNFTs = await ethers.getContractFactory("BatchNFTs")
     const batchNFTs = await BatchNFTs.deploy()
     await batchNFTs.deployed()
@@ -23,4 +23,4 @@ deployContract()
         process.exit(1);
     });
 
-module.exports = { CONTRACT_ADDRESS }; // Export CONTRACT_ADDRESS
+export { CONTRACT_ADDRESS }; // Export CONTRACT_ADDRESS

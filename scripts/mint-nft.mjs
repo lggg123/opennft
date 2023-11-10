@@ -1,6 +1,6 @@
 // Change this line in the main script
 import { storeMultipleAssets } from './store-asset.mjs';
-import { CONTRACT_ADDRESS } from './deploy-contract.js';
+import { CONTRACT_ADDRESS } from './deploy-contract.mjs';
 
 async function mintNFTs(contractAddress, metadataUrls) {
     const BatchNFTs = await ethers.getContractFactory("BatchNFTs")
