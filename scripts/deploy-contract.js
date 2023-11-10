@@ -1,4 +1,7 @@
+const { ethers } = require("hardhat");
+
 // Metadata stores on Filecoin and IPFS with URL: ipfs://bafyreiekjyftfzza4usx622lopihngfsuppkjzmxtp3w7hzgfjk53uymuy/metadata.json
+let CONTRACT_ADDRESS;
 
 async function deployContract() {
     const BatchNFTs = await ethers.getContractFactory("BatchNFTs")
@@ -6,17 +9,18 @@ async function deployContract() {
     await batchNFTs.deployed()
     const txHash = batchNFTs.deployTransaction.hash
     const txReceipt = await ethers.provider.waitForTransaction(txHash)
-    const contractAddress = txReceipt.contractAddress
-    console.log("Contract deployed to address:", contractAddress)
+    CONTRACT_ADDRESS = txReceipt.contractAddress
+    console.log("Contract deployed to address:", CONTRACT_ADDRESS)
 }
 
-// Contract deployed to address: 0x6eD9BF486785227c86A8E4792B73bE9a6ACee35D
-
 deployContract()
-    .then(() => process.exit(0))
+    .then(() => {
+        console.log("Contract Address: ", CONTRACT_ADDRESS);
+        process.exit(0);
+    })
     .catch((error) => {
         console.error(error);
         process.exit(1);
     });
 
-export { CONTRACT_ADDRESS }; // Export CONTRACT_ADDRESS
+module.exports = { CONTRACT_ADDRESS }; // Export CONTRACT_ADDRESS

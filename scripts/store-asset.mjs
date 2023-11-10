@@ -4,14 +4,13 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 const { NFT_STORAGE_API_KEY } = process.env;
-const metadataUrls = [];
 
-async function storeAsset(imagePath, fileName) {
+async function storeAsset(imagePath, fileName, metadataUrls) {
     const client = new NFTStorage({ token: NFT_STORAGE_API_KEY })
     const metadata = await client.store({
         name: fileName,
-        description: 'A beautiful artistic collage!',
-        collection: '',
+        description: 'A starter set of NFTs created using layers',
+        collection: 'Strong Square Smile by George Alexander Lugo',
         image: new File(
             [await fs.promises.readFile(imagePath)],
             `${fileName}.png`,
@@ -25,12 +24,13 @@ async function storeAsset(imagePath, fileName) {
 
 async function storeMultipleAssets() {
     const numberOfAssets = 128;
+    const metadataUrls = [];
 
     for (let i = 1; i <= numberOfAssets; i++) {
-        const imagePath = `assets/image_${i}.png`; // Update the path to your images
-        const fileName = `Image_${i}`;
+        const imagePath = `assets/${i}.png`; // Update the path to your images
+        const fileName = `Starter #${i}`;
 
-        await storeAsset(imagePath, fileName);
+        await storeAsset(imagePath, fileName, metadataUrls);
     }
 
     return metadataUrls;
@@ -42,3 +42,5 @@ storeMultipleAssets()
         console.error(error);
         process.exit(1);
     });
+
+export { storeMultipleAssets };

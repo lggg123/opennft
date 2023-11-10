@@ -11,7 +11,7 @@ contract BatchNFTs is ERC721URIStorage, Ownable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
-    constructor() ERC721("Smildeezduz", "SMTLZ") {}
+    constructor() ERC721("Smildeozduz", "SMTYLZ") {}
 
     function batchMintNFTs(address recipient, string[] memory tokenURIs)
         public onlyOwner
