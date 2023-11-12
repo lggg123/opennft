@@ -2,8 +2,6 @@
 let CONTRACT_ADDRESS;
 
 async function deployContract() {
-    const hre = await getHRE();
-    const ethers = hre.ethers;
     const BatchNFTs = await ethers.getContractFactory("BatchNFTs")
     const batchNFTs = await BatchNFTs.deploy()
     await batchNFTs.deployed()
