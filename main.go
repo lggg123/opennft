@@ -55,3 +55,16 @@ func ImageUploadHandler(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"message": "File Uploaded successfully."})
 }
+
+func setupRoutes() {
+	r := gin.Default()
+	r.POST("/train-gan", func(c *gin.Context) {
+		err := TrainGAN()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to train GAN"})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{"message": "GAN training initiated"})
+	})
+	// ... other routes
+}
