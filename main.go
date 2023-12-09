@@ -1,7 +1,6 @@
 package main
 
 import (
-	"net/http"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -10,22 +9,6 @@ import (
 
 func main() {
 	r := gin.Default()
-
-	r.POST("/upload-image", ImageUploadHandler)
-
-	r.POST("/create-nft", func(c *gin.Context) {
-		type RequestBody struct {
-			Text string `json:"text"`
-		}
-
-		var requestBody RequestBody
-		if err := c.BindJSON(&requestBody); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
-		}
-
-		c.JSON(http.StatusOK, gin.H{"message": "NFT creation initiated."})
-	})
 
 	// Configure CORS
 	r.Use(cors.New(cors.Config{
@@ -37,34 +20,7 @@ func main() {
 		MaxAge:           12 * time.Hour,
 	}))
 
+	SetupRoutes(r) // Set up the routes
+
 	r.Run() // By default, it runs on http://localhost:8080
-}
-
-func ImageUploadHandler(c *gin.Context) {
-	file, err := c.FormFile("image")
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	filePath := "path/to/save/" + file.Filename
-	if err := c.SaveUploadedFile(file, filePath); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{"message": "File Uploaded successfully."})
-}
-
-func setupRoutes() {
-	r := gin.Default()
-	r.POST("/train-gan", func(c *gin.Context) {
-		err := TrainGAN()
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to train GAN"})
-			return
-		}
-		c.JSON(http.StatusOK, gin.H{"message": "GAN training initiated"})
-	})
-	// ... other routes
 }
