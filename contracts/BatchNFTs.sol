@@ -1,29 +1,38 @@
-// Contract based on https://docs.openzeppelin.com/contracts/4.x/erc721
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.12;
+pragma solidity >=0.4.22 <0.9.0;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import '@openzeppelin/contracts@4.2.0/token/ERC1155/ERC1155.sol';
+import '@openzeppelin/contracts@4.2.0/access/Ownable.sol';
 
-contract BatchNFTs is ERC721URIStorage, Ownable {
-    using Counters for Counters.Counter;
-    Counters.Counter private _tokenIds;
+contract ArtCollectible is Ownable, ERC1155 {
+    // Base URI
+    string private baseURI;
+    string public name;
 
-    constructor() ERC721("Smildeozduz", "SMTYLZ") {}
-
-    function batchMintNFTs(address recipient, string[] memory tokenURIs)
-        public onlyOwner
+    constructor()
+        ERC1155(
+            'ipfs://bafybeifepouvjudkc6ccybnxxfmesif4aothbm4wkcxa5gi6snxe3yco44/{id}.json'
+        )
     {
-        require(tokenURIs.length > 0, "No token URIs provided");
+        setName('Ghosterz tests');
+    }
 
-        for (uint256 i = 0; i < tokenURIs.length; i++) {
-            _tokenIds.increment();
+    function setURI(string memory _newuri) public onlyOwner {
+        _setURI(_newuri);
+    }
 
-            uint256 newItemId = _tokenIds.current();
-            _mint(recipient, newItemId);
-            _setTokenURI(newItemId, tokenURIs[i]);
-        }
+    function setName(string memory _name) public onlyOwner {
+        name = _name;
+    }
+
+    function mintBatch(uint256[] memory ids, uint256[] memory amounts)
+        public
+        onlyOwner
+    {
+        _mintBatch(msg.sender, ids, amounts, '');
+    }
+
+    function mint(uint256 id, uint256 amount) public onlyOwner {
+        _mint(msg.sender, id, amount, '');
     }
 }
