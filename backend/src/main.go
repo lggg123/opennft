@@ -8,10 +8,10 @@ import (
 )
 
 func main() {
-	r := gin.Default()
+	router := gin.Default()
 
 	// Configure CORS
-	r.Use(cors.New(cors.Config{
+	router.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"http://localhost:3000"}, // Your frontend's URL
 		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Accept"},
@@ -20,7 +20,9 @@ func main() {
 		MaxAge:           12 * time.Hour,
 	}))
 
-	SetupRoutes(r) // Set up the routes
+	router.POST("/upload-image", ImageUploadHandler)
+	router.POST("/create-nft", CreateNFTHandler)
+	router.POST("/train-gan", TrainGANHandler)
 
-	r.Run() // By default, it runs on http://localhost:8080
+	router.Run() // By default, it runs on http://localhost:8080
 }

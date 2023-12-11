@@ -18,11 +18,9 @@ List the key features of your project. For example:
 
 clone the repo by typing `git clone https://github.com/lggg123/opennft`
 
-This is a go application and a react application. To begin the go application simply type ``
-
 ### Prerequisites
 
-What things you need to install the software and how to install them.
+Make sure to have Go installed and gin as well. Also make sure to have Node.js installed the proper version for this.
 
 ### Installing
 
@@ -30,7 +28,9 @@ A step by step series of examples that tell you how to get a development environ
 
 ## Usage
 
-How to use your project after installation.
+This is a go application and a react application. To begin the go application simply type `cd backend/src` type `go run .` then the backend should be running.
+
+To run the frontend as well type `cd ..` then type `cd ..` then type `cd frontend` then type `npm start`
 
 ## Contributing
 
