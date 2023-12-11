@@ -14,7 +14,7 @@ contract ArtCollectible is Ownable, ERC1155 {
             'ipfs://bafybeifepouvjudkc6ccybnxxfmesif4aothbm4wkcxa5gi6snxe3yco44/{id}.json'
         )
     {
-        setName('Ghosterz tests');
+        setName('Ghosterz');
     }
 
     function setURI(string memory _newuri) public onlyOwner {
