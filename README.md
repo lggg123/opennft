@@ -4,17 +4,21 @@ Welcome to openNFT, a comprehensive platform (or tool, library, etc.) for explor
 
 ## Introduction
 
-Provide a brief introduction to your project. What does it do? What problem does it aim to solve? Why is it useful or interesting?
+I created a openNFT dApp that uploads images to be trained by a GAN I am still trying to tie into the application and also I have a text input field to help create NFTs based on text input.
 
 ## Features
 
 List the key features of your project. For example:
 
-- Feature 1: Description of this feature.
-- Feature 2: Description of another feature.
-- Feature 3: And so on...
+- Feature 1: Image Uploader to train GAN.
+- Feature 2: NFT image creator tool.
+- Feature 3: NFT minter
 
 ## Getting Started
+
+clone the repo by typing `git clone https://github.com/lggg123/opennft`
+
+This is a go application and a react application. To begin the go application simply type ``
 
 ### Prerequisites
 
